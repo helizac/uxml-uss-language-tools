@@ -1,0 +1,153 @@
+{
+  "UXML Document Root": {
+    "prefix": "uxml",
+    "body": [
+      "<?xml version=\"1.0\" encoding=\"utf-8\"?>",
+      "<engine:UXML",
+      "    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"",
+      "    xmlns:engine=\"UnityEngine.UIElements\"",
+      "    xmlns:editor=\"UnityEditor.UIElements\"",
+      "    xsi:noNamespaceSchemaLocation=\"../../UIElementsSchema/UIElements.xsd\"",
+      ">",
+      "    $0",
+      "</engine:UXML>"
+    ],
+    "description": "UXML document root with namespaces and schema location"
+  },
+  "UXML Document Root (ui prefix)": {
+    "prefix": "uxml-ui",
+    "body": [
+      "<ui:UXML xmlns:ui=\"UnityEngine.UIElements\" xmlns:uie=\"UnityEditor.UIElements\">",
+      "    $0",
+      "</ui:UXML>"
+    ],
+    "description": "UXML document root using the 'ui' prefix"
+  },
+  "VisualElement": {
+    "prefix": "visualelement",
+    "body": [
+      "<engine:VisualElement name=\"${1:element-name}\">",
+      "    $0",
+      "</engine:VisualElement>"
+    ],
+    "description": "VisualElement container"
+  },
+  "Button": {
+    "prefix": "button",
+    "body": [
+      "<engine:Button name=\"${1:button-name}\" text=\"${2:Click me}\" />"
+    ],
+    "description": "Button control"
+  },
+  "Label": {
+    "prefix": "label",
+    "body": [
+      "<engine:Label name=\"${1:label-name}\" text=\"${2:Label text}\" />"
+    ],
+    "description": "Label control"
+  },
+  "Toggle": {
+    "prefix": "toggle",
+    "body": [
+      "<engine:Toggle name=\"${1:toggle-name}\" label=\"${2:Toggle label}\" value=\"${3|false,true|}\" />"
+    ],
+    "description": "Toggle control with label"
+  },
+  "TextField": {
+    "prefix": "textfield",
+    "body": [
+      "<engine:TextField name=\"${1:field-name}\" label=\"${2:Label}\" value=\"${3:default value}\" />"
+    ],
+    "description": "TextField control"
+  },
+  "Box Container": {
+    "prefix": "box",
+    "body": [
+      "<engine:Box>",
+      "    $0",
+      "</engine:Box>"
+    ],
+    "description": "Box layout container"
+  },
+  "ScrollView": {
+    "prefix": "scrollview",
+    "body": [
+      "<engine:ScrollView name=\"${1:scroll-view}\">",
+      "    $0",
+      "</engine:ScrollView>"
+    ],
+    "description": "ScrollView container"
+  },
+  "Foldout": {
+    "prefix": "foldout",
+    "body": [
+      "<engine:Foldout name=\"${1:foldout-name}\" text=\"${2:Foldout title}\" value=\"${3|true,false|}\">",
+      "    $0",
+      "</engine:Foldout>"
+    ],
+    "description": "Foldout (collapsible section)"
+  },
+  "ListView": {
+    "prefix": "listview",
+    "body": [
+      "<engine:ListView name=\"${1:list-view}\" />"
+    ],
+    "description": "ListView control"
+  },
+  "Slider": {
+    "prefix": "slider",
+    "body": [
+      "<engine:Slider name=\"${1:slider}\" label=\"${2:Slider}\" low-value=\"${3:0}\" high-value=\"${4:100}\" value=\"${5:50}\" />"
+    ],
+    "description": "Float Slider"
+  },
+  "EnumField": {
+    "prefix": "enumfield",
+    "body": [
+      "<engine:EnumField name=\"${1:enum-field}\" label=\"${2:Label}\" />"
+    ],
+    "description": "EnumField control"
+  },
+  "DropdownField": {
+    "prefix": "dropdown",
+    "body": [
+      "<engine:DropdownField name=\"${1:dropdown}\" label=\"${2:Label}\" />"
+    ],
+    "description": "DropdownField control"
+  },
+  "Style Reference": {
+    "prefix": "style",
+    "body": [
+      "<Style src=\"${1:./styles.uss}\" />"
+    ],
+    "description": "Reference an external USS stylesheet"
+  },
+  "Template Definition": {
+    "prefix": "template",
+    "body": [
+      "<engine:Template name=\"${1:TemplateName}\" src=\"${2:./Template.uxml}\" />"
+    ],
+    "description": "Define a UXML template reference"
+  },
+  "Template Instance": {
+    "prefix": "instance",
+    "body": [
+      "<engine:Instance name=\"${1:instance-name}\" template=\"${2:TemplateName}\" />"
+    ],
+    "description": "Instantiate a UXML template"
+  },
+  "AttributeOverrides": {
+    "prefix": "override",
+    "body": [
+      "<engine:AttributeOverrides element-name=\"${1:target-element}\" ${2:attribute}=\"${3:value}\" />"
+    ],
+    "description": "Override attributes on a template instance child"
+  },
+  "Inline Style Attribute": {
+    "prefix": "style-inline",
+    "body": [
+      "style=\"${1:width: 100px; height: 100px;}\""
+    ],
+    "description": "Add an inline style attribute"
+  }
+}

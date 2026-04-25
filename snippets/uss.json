@@ -1,0 +1,170 @@
+{
+  "ID Selector Rule": {
+    "prefix": "id",
+    "body": [
+      "#${1:element-name} {",
+      "    $0",
+      "}"
+    ],
+    "description": "ID selector rule"
+  },
+  "Class Selector Rule": {
+    "prefix": "class",
+    "body": [
+      ".${1:class-name} {",
+      "    $0",
+      "}"
+    ],
+    "description": "Class selector rule"
+  },
+  "Type Selector Rule": {
+    "prefix": "type",
+    "body": [
+      "${1:Button} {",
+      "    $0",
+      "}"
+    ],
+    "description": "Type (element) selector rule"
+  },
+  "Hover Pseudo": {
+    "prefix": "hover",
+    "body": [
+      "${1:.target}:hover {",
+      "    $0",
+      "}"
+    ],
+    "description": ":hover pseudo-class rule"
+  },
+  "Active Pseudo": {
+    "prefix": "active",
+    "body": [
+      "${1:.target}:active {",
+      "    $0",
+      "}"
+    ],
+    "description": ":active pseudo-class rule"
+  },
+  "Focus Pseudo": {
+    "prefix": "focus",
+    "body": [
+      "${1:.target}:focus {",
+      "    $0",
+      "}"
+    ],
+    "description": ":focus pseudo-class rule"
+  },
+  "Flex Container": {
+    "prefix": "flex",
+    "body": [
+      "flex-direction: ${1|row,column,row-reverse,column-reverse|};",
+      "justify-content: ${2|flex-start,center,flex-end,space-between,space-around|};",
+      "align-items: ${3|stretch,flex-start,center,flex-end,baseline|};"
+    ],
+    "description": "Flex layout properties"
+  },
+  "Width and Height": {
+    "prefix": "size",
+    "body": [
+      "width: ${1:100}px;",
+      "height: ${2:100}px;"
+    ],
+    "description": "Set width and height"
+  },
+  "Padding": {
+    "prefix": "padding",
+    "body": [
+      "padding: ${1:10}px;"
+    ],
+    "description": "Padding shorthand"
+  },
+  "Margin": {
+    "prefix": "margin",
+    "body": [
+      "margin: ${1:10}px;"
+    ],
+    "description": "Margin shorthand"
+  },
+  "Background Color": {
+    "prefix": "bg",
+    "body": [
+      "background-color: ${1:rgb(255, 255, 255)};"
+    ],
+    "description": "background-color"
+  },
+  "Border": {
+    "prefix": "border",
+    "body": [
+      "border-width: ${1:1}px;",
+      "border-color: ${2:rgb(0, 0, 0)};",
+      "border-radius: ${3:0}px;"
+    ],
+    "description": "Border properties"
+  },
+  "Color": {
+    "prefix": "color",
+    "body": [
+      "color: ${1:rgb(0, 0, 0)};"
+    ],
+    "description": "Foreground color"
+  },
+  "Unity Font": {
+    "prefix": "unityfont",
+    "body": [
+      "-unity-font: ${1:resource(\"Fonts/MyFont\")};"
+    ],
+    "description": "Set the font (Unity-specific)"
+  },
+  "Unity Font Style": {
+    "prefix": "unityfontstyle",
+    "body": [
+      "-unity-font-style: ${1|normal,italic,bold,bold-and-italic|};"
+    ],
+    "description": "Set the font style (Unity-specific)"
+  },
+  "Unity Text Align": {
+    "prefix": "unitytextalign",
+    "body": [
+      "-unity-text-align: ${1|upper-left,upper-center,upper-right,middle-left,middle-center,middle-right,lower-left,lower-center,lower-right|};"
+    ],
+    "description": "Unity text alignment"
+  },
+  "Background Image": {
+    "prefix": "bgimage",
+    "body": [
+      "background-image: ${1:resource(\"Textures/MyTexture\")};"
+    ],
+    "description": "Background image (Unity-specific)"
+  },
+  "Background Image (URL)": {
+    "prefix": "bgimage-url",
+    "body": [
+      "background-image: url('${1:project://database/Assets/Textures/MyTexture.png}');"
+    ],
+    "description": "Background image using url()"
+  },
+  "Transition": {
+    "prefix": "transition",
+    "body": [
+      "transition-property: ${1:all};",
+      "transition-duration: ${2:0.3s};",
+      "transition-timing-function: ${3|ease,ease-in,ease-out,ease-in-out,linear|};"
+    ],
+    "description": "Transition properties"
+  },
+  "Position Absolute": {
+    "prefix": "abs",
+    "body": [
+      "position: absolute;",
+      "top: ${1:0}px;",
+      "left: ${2:0}px;"
+    ],
+    "description": "Position absolute"
+  },
+  "Custom Variable": {
+    "prefix": "var",
+    "body": [
+      "--${1:var-name}: ${2:value};"
+    ],
+    "description": "Custom CSS variable"
+  }
+}

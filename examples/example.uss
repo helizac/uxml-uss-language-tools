@@ -1,0 +1,43 @@
+/* Example USS stylesheet */
+
+.container {
+    flex-direction: column;
+    padding: 16px;
+    background-color: rgb(40, 40, 40);
+    border-radius: 4px;
+}
+
+#title {
+    color: rgb(220, 220, 220);
+    font-size: 18px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    margin-bottom: 12px;
+}
+
+Toggle {
+    margin-bottom: 4px;
+    color: rgb(200, 200, 200);
+}
+
+Button {
+    height: 28px;
+    margin: 4px;
+    border-radius: 3px;
+    background-color: rgb(80, 80, 80);
+    color: white;
+    transition-property: background-color;
+    transition-duration: 0.15s;
+}
+
+Button:hover {
+    background-color: rgb(110, 110, 110);
+}
+
+Button.primary {
+    background-color: rgb(60, 120, 200);
+}
+
+Button.primary:hover {
+    background-color: rgb(80, 140, 220);
+}
