@@ -1,24 +1,17 @@
 name: Release
 
-# Three ways to trigger a release:
-#
-# 1. Push a tag like v0.2.0  -> always releases that version.
-# 2. Push to main where package.json version was bumped -> auto-tags + releases.
-# 3. Manual "Run workflow" from the Actions tab.
-#
-# Required repository secrets:
-#   VSCE_PAT  -> Azure DevOps PAT (Marketplace > Manage scope) for VS Code Marketplace
-#   OVSX_PAT  -> Open VSX token (optional, for VSCodium and forks)
-
 on:
   push:
     branches: [main]
     tags: ['v*.*.*']
   workflow_dispatch:
 
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   detect-version:
-    # Decide whether this run should publish, and what tag to use.
     runs-on: ubuntu-latest
     outputs:
       should_release: ${{ steps.check.outputs.should_release }}
@@ -27,7 +20,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 2  # need previous commit to diff package.json
+          fetch-depth: 0
+          fetch-tags: true
 
       - id: check
         shell: bash
@@ -35,25 +29,36 @@ jobs:
           set -eu
           version=$(node -p "require('./package.json').version")
           tag="v$version"
-          echo "version=$version"   >> "$GITHUB_OUTPUT"
-          echo "tag=$tag"           >> "$GITHUB_OUTPUT"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "tag=$tag"         >> "$GITHUB_OUTPUT"
 
-          if [[ "${{ github.event_name }}" == "push" && "${{ github.ref }}" == refs/tags/* ]]; then
+          event="${{ github.event_name }}"
+          ref="${{ github.ref }}"
+
+          if [[ "$event" == "push" && "$ref" == refs/tags/* ]]; then
             # Tag push -> always release.
             echo "should_release=true" >> "$GITHUB_OUTPUT"
-            echo "Release reason: tag push ($tag)"
-          elif [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            echo "Reason: tag push ($tag)"
+          elif [[ "$event" == "workflow_dispatch" ]]; then
+            # Manual run -> always release.
             echo "should_release=true" >> "$GITHUB_OUTPUT"
-            echo "Release reason: manual dispatch ($tag)"
+            echo "Reason: manual dispatch ($tag)"
           else
-            # Push to main -> release iff package.json version actually changed.
-            prev=$(git show HEAD~1:package.json 2>/dev/null | node -e "let d='';process.stdin.on('data',c=>d+=c).on('end',()=>{try{console.log(JSON.parse(d).version)}catch{console.log('')}})") || prev=""
-            if [[ -n "$prev" && "$prev" != "$version" ]]; then
-              echo "should_release=true" >> "$GITHUB_OUTPUT"
-              echo "Release reason: version bumped from $prev to $version"
-            else
+            # Push to main. Skip if the tag already exists remotely; otherwise
+            # release iff the version actually changed since the previous commit.
+            if git ls-remote --tags --exit-code origin "refs/tags/$tag" >/dev/null 2>&1; then
               echo "should_release=false" >> "$GITHUB_OUTPUT"
-              echo "No version bump detected (package.json version is still $version). Skipping release."
+              echo "Reason: tag $tag already exists remotely (the tag-push run will handle the release)"
+            else
+              prev_json=$(git show HEAD~1:package.json 2>/dev/null || echo '{}')
+              prev=$(node -e "try { console.log(JSON.parse(process.argv[1]).version || '') } catch { console.log('') }" -- "$prev_json")
+              if [[ -n "$prev" && "$prev" != "$version" ]]; then
+                echo "should_release=true" >> "$GITHUB_OUTPUT"
+                echo "Reason: version bumped from $prev to $version on main"
+              else
+                echo "should_release=false" >> "$GITHUB_OUTPUT"
+                echo "Reason: no version bump detected (still $version)"
+              fi
             fi
           fi
 
@@ -62,9 +67,12 @@ jobs:
     if: needs.detect-version.outputs.should_release == 'true'
     runs-on: ubuntu-latest
     permissions:
-      contents: write   # needed to create the GitHub Release and push the tag
+      contents: write
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
 
       - uses: actions/setup-node@v4
         with:
@@ -80,16 +88,16 @@ jobs:
         run: npx --yes @vscode/vsce package --out extension.vsix
 
       - name: Ensure git tag exists
-        # If we got here from a main-branch version bump (no tag pushed by user),
-        # create and push the tag before creating the GitHub Release.
         env:
           TAG: ${{ needs.detect-version.outputs.tag }}
         run: |
           set -eu
-          if ! git rev-parse "$TAG" >/dev/null 2>&1; then
-            git tag "$TAG"
-            git push origin "$TAG"
+          if git ls-remote --tags --exit-code origin "refs/tags/$TAG" >/dev/null 2>&1; then
+            echo "Tag $TAG already exists remotely. Nothing to do."
+            exit 0
           fi
+          git tag "$TAG"
+          git push origin "$TAG"
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
