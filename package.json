@@ -2,7 +2,7 @@
   "name": "uxml-uss-language-tools",
   "displayName": "UXML & USS Language Tools",
   "description": "Language support for Unity UI Toolkit files: syntax highlighting, snippets, IntelliSense, hover docs, diagnostics and quick fixes for .uxml and .uss files.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "publisher": "helizac",
   "license": "MIT",
   "icon": "icon.png",
