@@ -1,9 +1,9 @@
-# UXML & USS Language Tools — VS Code extension
+# UXML & USS Language Tools - VS Code extension
 
 Language support for Unity's UI Toolkit file formats:
 
-- **`.uxml`** — XML-based UI layout (think HTML/XAML for Unity)
-- **`.uss`** — CSS-like stylesheets for UXML
+- **`.uxml`** - XML-based UI layout (think HTML/XAML for Unity)
+- **`.uss`** - CSS-like stylesheets for UXML
 
 [![CI](https://github.com/helizac/uxml-uss-language-tools/actions/workflows/ci.yml/badge.svg)](https://github.com/helizac/uxml-uss-language-tools/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
@@ -63,7 +63,7 @@ npm run watch       # rebuild on change
 
 1. Open the repo in VS Code.
 2. Press <kbd>F5</kbd> (or pick **Run Extension** from the Run and Debug view).
-3. A second VS Code window opens — the *Extension Development Host* — with the extension loaded.
+3. A second VS Code window opens - the *Extension Development Host* - with the extension loaded.
 4. Open `examples/example.uxml` and `examples/example.uss`.
 
 ### Run tests
@@ -98,7 +98,7 @@ The most impactful contributions are usually:
 
 - **Adding missing elements or attributes** to `src/unityElements.ts`.
 - **Adding missing USS properties** to `src/ussProperties.ts`.
-- **Fixing false positives** in the diagnostics — open an issue with a minimal `.uxml` or `.uss` snippet that is incorrectly flagged.
+- **Fixing false positives** in the diagnostics - open an issue with a minimal `.uxml` or `.uss` snippet that is incorrectly flagged.
 
 ## Project layout
 
@@ -140,3 +140,7 @@ warranty of any kind. It is not affiliated with, endorsed by, or sponsored by
 Unity Technologies. "Unity" and "UI Toolkit" are trademarks of Unity
 Technologies. The author is not liable for any issues arising from use of
 this software.
+
+## Found a bug?
+
+You can file an issue directly on the GitHub Repo > [UXML & USS Language Tools > Issues](https://github.com/helizac/uxml-uss-language-tools/issues)
