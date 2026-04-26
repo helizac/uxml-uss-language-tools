@@ -133,11 +133,7 @@ uxml-uss-language-tools/
     └── PULL_REQUEST_TEMPLATE.md
 ```
 
-## License
-
-[MIT](LICENSE)
-
-## Disclaimer
+## License & Disclaimer
 
 This extension is provided "as is" under the [MIT License](LICENSE), without
 warranty of any kind. It is not affiliated with, endorsed by, or sponsored by
