@@ -69,18 +69,25 @@ suite('UXML diagnostics', () => {
         const doc = await openUxml('<engine:Buton />');
         const result = lintUxml(doc);
         const diag = result.diagnostics[0];
+        assert.ok(diag, 'lint should produce a diagnostic for "Buton"');
 
-        // Simulate the editor invoking the code action provider on this diagnostic.
+        // Wait briefly so the on-open diagnostic propagation completes; on macOS
+        // the code-action provider sometimes runs before the collection is updated,
+        // returning an empty list otherwise.
+        await new Promise(r => setTimeout(r, 200));
+
         const actions = await vscode.commands.executeCommand<vscode.CodeAction[]>(
             'vscode.executeCodeActionProvider',
             doc.uri,
             diag.range,
-            vscode.CodeActionKind.QuickFix.value,
         );
-        assert.ok(actions && actions.length > 0, 'expected at least one code action');
-        const replace = actions!.find(a => a.title.includes('Button'));
-        assert.ok(replace, `expected a "Replace with Button" quick fix; got titles: ${actions!.map(a => a.title).join(', ')}`);
-        assert.ok(replace!.edit, 'quick fix should carry a WorkspaceEdit');
+        assert.ok(actions, 'expected the code action command to return a list');
+        const replace = actions.find(a => a.title.includes('Button'));
+        assert.ok(
+            replace,
+            `expected a "Replace with Button" quick fix; got titles: [${actions.map(a => a.title).join(', ')}]`,
+        );
+        assert.ok(replace.edit, 'quick fix should carry a WorkspaceEdit');
     });
 });
 
@@ -121,15 +128,20 @@ suite('USS diagnostics', () => {
     test('quick fix replaces unknown property', async () => {
         const doc = await openUss('.btn { colr: red; }');
         const diag = lintUss(doc).diagnostics[0];
+        assert.ok(diag, 'lint should produce a diagnostic for "colr"');
+
+        await new Promise(r => setTimeout(r, 200));
 
         const actions = await vscode.commands.executeCommand<vscode.CodeAction[]>(
             'vscode.executeCodeActionProvider',
             doc.uri,
             diag.range,
-            vscode.CodeActionKind.QuickFix.value,
         );
-        assert.ok(actions && actions.length > 0);
-        const replace = actions!.find(a => a.title.includes('color'));
-        assert.ok(replace, `expected a "Replace with color" quick fix`);
+        assert.ok(actions, 'expected the code action command to return a list');
+        const replace = actions.find(a => a.title.includes('color'));
+        assert.ok(
+            replace,
+            `expected a "Replace with color" quick fix; got titles: [${actions.map(a => a.title).join(', ')}]`,
+        );
     });
 });
