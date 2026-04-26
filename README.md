@@ -76,53 +76,6 @@ The suite has three layers:
 
 You can also pick **Extension Tests** from the Run and Debug view to run them with breakpoints.
 
-## Publishing
-
-This section is for maintainers releasing new versions.
-
-### One-time setup
-
-1. **Pick a publisher ID.** Go to <https://marketplace.visualstudio.com/manage/createpublisher> and create one. Update `"publisher"` in `package.json`.
-2. **Create an Azure DevOps Personal Access Token** ([instructions](https://code.visualstudio.com/api/working-with-extensions/publishing-extension#get-a-personal-access-token)). Scope: *Marketplace → Manage*. Save it as the `VSCE_PAT` repository secret on GitHub.
-3. **(Optional) Create an Open VSX token** at <https://open-vsx.org/user-settings/tokens> and save it as `OVSX_PAT`. Open VSX is the registry used by VSCodium and other VS Code forks — publishing there roughly doubles your reach.
-4. **Add an `icon.png`** (128×128 PNG) at the repo root. The Marketplace requires one; without it, `vsce package` will warn but still succeed.
-
-### Cutting a release
-
-The release workflow handles three triggers, in order of how I recommend using them:
-
-**1. Bump the version on `main` (most common — fully automated)**
-
-```bash
-npm version patch    # 0.1.0 -> 0.1.1, also commits the change
-git push origin main
-```
-
-The CI workflow detects that `package.json`'s version field changed since the previous commit, creates the matching `v0.1.1` tag automatically, builds the `.vsix`, attaches it to a GitHub Release, and publishes to both registries. The user side is fully automatic too — VS Code checks for extension updates in the background and installs them silently within a few hours, or immediately if the user has the extension open.
-
-**2. Manual tag push (if you want full control)**
-
-```bash
-git tag v0.1.1
-git push origin v0.1.1
-```
-
-**3. Manual dispatch from the Actions tab** — useful for re-running a failed publish without bumping the version.
-
-For all three triggers, if `VSCE_PAT` or `OVSX_PAT` is missing, the workflow will skip that publish step and continue. So you can land the workflow first and add the secrets later.
-
-### Doing it manually (no CI)
-
-If you'd rather publish from your machine:
-
-```bash
-npx --yes @vscode/vsce login helizac        # paste the Azure DevOps PAT once
-npx --yes @vscode/vsce publish              # bumps + publishes
-npx --yes ovsx publish -p $OVSX_PAT         # also publish to Open VSX
-```
-
-`vsce publish patch|minor|major` will bump the version in `package.json` and publish in one step.
-
 ### Versioning
 
 We follow [SemVer](https://semver.org/):
