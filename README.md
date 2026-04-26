@@ -8,6 +8,10 @@ Language support for Unity's UI Toolkit file formats:
 [![CI](https://github.com/helizac/uxml-uss-language-tools/actions/workflows/ci.yml/badge.svg)](https://github.com/helizac/uxml-uss-language-tools/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
+
+[VS Code](https://marketplace.visualstudio.com/items?itemName=helizac.uxml-uss-language-tools) | 
+[Open Vsx](https://open-vsx.org/extension/helizac/uxml-uss-language-tools)
+
 ## Features
 
 - **Syntax highlighting** for both formats. Unity element names like `Button`, `Toggle`, `ScrollView` are highlighted distinctly from custom controls; `-unity-*` USS properties get their own scope.
